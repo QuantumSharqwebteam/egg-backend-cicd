@@ -7,7 +7,7 @@ phases:
     commands:
       - echo "Installing dependencies..."
       - npm install -g serverless@latest
-      - npm install  # Using ci instead of install for more reliable builds
+      - npm ci  # Using ci instead of install for more reliable builds
       
   pre_build:
     commands:
