@@ -6,7 +6,7 @@ phases:
     commands:
       - echo Installing dependencies...
       - npm install -g serverless
-      - npm install
+      - npm ci
   build:
     commands:
       - echo Building the serverless project...
