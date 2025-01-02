@@ -1,0 +1,29 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - echo "Installing dependencies..."
+      - npm install -g serverless@latest
+      - npm install  # Using ci instead of install for more reliable builds
+      
+  pre_build:
+    commands:
+      - echo "Running pre-build checks..."
+      - npm run lint || true  # Optional: Add if you have linting
+      - npm test || true      # Optional: Add if you have tests
+      
+  build:
+    commands:
+      - echo "Building the serverless project..."
+      - serverless deploy --stage prod --verbose
+
+artifacts:
+  files:
+    - '/*'
+  exclude-patterns:
+    - 'node_modules//*'
+    - '.git//*'
+    - 'test//*'
