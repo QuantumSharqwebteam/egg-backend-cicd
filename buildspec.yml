@@ -5,8 +5,9 @@ phases:
       nodejs: 20
     commands:
       - echo Installing dependencies...
+      - npm config set maxsockets 50
       - npm install -g serverless
-      - npm ci
+      - npm install
   build:
     commands:
       - echo Building the serverless project...
@@ -14,3 +15,6 @@ phases:
 artifacts:
   files:
     - '**/*'
+cache:
+  paths:
+    - '/root/.npm'
