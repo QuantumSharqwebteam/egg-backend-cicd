@@ -14,7 +14,8 @@ phases:
   build:
     commands:
       - echo Deploying with Serverless Framework...
-      - serverless deploy --stage prod
+      - npx serverless deploy --stage prod
+
 artifacts:
   files:
     - '**/*'
