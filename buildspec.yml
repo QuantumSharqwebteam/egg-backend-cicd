@@ -1,22 +1,13 @@
 version: 0.2
-
 phases:
   install:
     runtime-versions:
-      nodejs: 20
+      nodejs: 16 # Match the Node.js version
     commands:
-      - echo Installing Serverless Framework...
-      - npm install -g serverless
-      - echo Verifying Serverless Framework installation...
-      - serverless --version
-      - echo Installing project dependencies...
       - npm install
   build:
     commands:
-      - echo Deploying with Serverless Framework...
-      - npx serverless deploy --stage prod
-
+      - zip -r function.zip handler.js node_modules package.json package-lock.json
 artifacts:
   files:
-    - '**/*'
-
+    - function.zip
