@@ -8,10 +8,7 @@ phases:
   build:
     commands:
      - zip -r function.zip handler.js node_modules package.json package-lock.json
-  args: "lambda update-function-code \
-    --function-name arn:aws:lambda:ap-south-1:886436936280:function:egg-dep \
-    --zip-file fileb://code.zip"   
-artifacts:
+  artifacts:
   files:
     - function.zip
   name: SourceArtifact
