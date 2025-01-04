@@ -1,34 +1,12 @@
-# "org" ensures this Service is used with the correct Serverless Framework Access Key.
-org: mukilan
-# "service" is the name of this project. This will also be added to your AWS resource names.
-service: egg-backend-cicd
-
-
+service: my-backend-service
 provider:
   name: aws
-  runtime: nodejs20.x
-  iam: 
-    role:
-      statements:
-        - Effect: Allow
-          Action:
-            - dynamodb:*
-          Resource: "*"
-  environment:
-    SECRET: 'quantumsharq'
-    JWT_EXPIRE: '24h'
-    JWT_REFRESHTOKEN_EXPIRE: '30d' 
-    
-
+  runtime: nodejs16.x
+  region: us-east-1
 functions:
   api:
-    handler: handler.handler
+    handler: handler.api
     events:
-      - httpApi: "*"
-
-plugins:
-  - serverless-offline  # Add the plugin here
-
-custom:
-  serverless-offline:
-    port: 4000
+      - http:
+          path: /
+          method: get
