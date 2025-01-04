@@ -1,14 +1,21 @@
 version: 0.2
+
 phases:
   install:
     runtime-versions:
-      nodejs: 16
+      nodejs: 20
     commands:
-      - echo Cleaning npm cache...
-      - npm cache clean --force
-      - echo Installing dependencies...
+      - echo Installing Serverless Framework...
+      - npm install -g serverless
+      - echo Verifying Serverless Framework installation...
+      - serverless --version
+      - echo Installing project dependencies...
       - npm install
   build:
     commands:
+      - echo Deploying with Serverless Framework...
       - serverless deploy --stage prod
+artifacts:
+  files:
+    - '**/*'
 
