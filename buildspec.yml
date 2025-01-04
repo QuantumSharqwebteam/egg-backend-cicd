@@ -9,6 +9,4 @@ phases:
   build:
     commands:
       - serverless deploy --stage prod
-artifacts:
-  files:
-    - '**/*'
+
