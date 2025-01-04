@@ -7,8 +7,8 @@ phases:
       - npm install
   build:
     commands:
-     - zip -r function.zip handler.js node_modules package.json package-lock.json
-  artifacts:
+      - zip -r function.zip handler.js node_modules package.json package-lock.json
+artifacts:
   files:
     - function.zip
   name: SourceArtifact
