@@ -4,10 +4,16 @@ phases:
     runtime-versions:
       nodejs: 20 # Match the Node.js version
     commands:
+      - echo Installing dependencies...
       - npm install
   build:
     commands:
+      - echo Packaging the application...
       - zip -r function.zip handler.js node_modules package.json package-lock.json
+  post_build:
+    commands:
+      - echo Deploying to AWS Lambda...
+      - aws lambda update-function-code --function-name arn:aws:lambda:ap-south-1:886436936280:function:egg-dep --zip-file fileb://function.zip
 artifacts:
   files:
     - function.zip
