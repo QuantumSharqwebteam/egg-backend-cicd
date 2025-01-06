@@ -1,39 +1,31 @@
-import express from 'express';
-import cors from 'cors';
-import serverless from 'serverless-http';
-import { router } from './src/routes/routes.js';
+const AWS = require("aws-sdk");
+const codepipeline = new AWS.CodePipeline();
 
+exports.handler = async (event) => {
+    const jobId = event["CodePipeline.job"].id;
 
-// Initialize the Express app
-const app = express();
+    try {
+        // Add your Lambda logic here
+        console.log("Processing pipeline job:", jobId);
 
-// Middleware setup
-app.use(express.urlencoded({ limit: '1mb', extended: true }));
-app.use(express.json({ limit: '1mb' }));
+        // Notify CodePipeline of success
+        await codepipeline.putJobSuccessResult({ jobId }).promise();
+        console.log("Successfully notified CodePipeline.");
+        return {
+            statusCode: 200,
+            body: "Job completed successfully!",
+        };
+    } catch (error) {
+        console.error("Error processing job:", error);
 
-// CORS setup to allow all origins
-app.use(cors());
-
-// Handle preflight requests
-app.options('*', cors());
-
-// Add headers to all responses
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*'); // Or specify a particular origin
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
-});
-
-
-// Routes setup
-app.use('/', router);
-app.get('*', (req, res) => {
-  res.status(200).send('Welcome');
-});
-
-
-
-// Export the serverless handler
-const handler = serverless(app);
-export { handler };
+        // Notify CodePipeline of failure
+        await codepipeline.putJobFailureResult({
+            jobId,
+            failureDetails: {
+                message: error.message,
+                type: "JobFailed",
+            },
+        }).promise();
+        throw error; // Ensure Lambda shows an error
+    }
+};
