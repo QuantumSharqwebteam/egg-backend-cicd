@@ -1,4 +1,17 @@
 {
+  "CodePipeline.job": {
+    "id": "example-job-id",
+    "data": {
+      "actionConfiguration": {
+        "configuration": {
+          "FunctionName": "egg-dep",
+          "UserParameters": "param"
+        }
+      }
+    }
+  }
+}
+{
   "name": "name",
   "version": "1.0.0",
   "type": "module",
